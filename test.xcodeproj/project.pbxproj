@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		CAD395C700E8EA7FC7418F58 /* Pods_test.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D00BC21E4CABEC376D542371 /* Pods_test.framework */; };
+		FA25303621EF8B9D004AAA65 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA25303521EF8B9D004AAA65 /* Book.swift */; };
 		FA2A3D0E21E73ADA009D345F /* OptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2A3D0D21E73ADA009D345F /* OptionViewController.swift */; };
 		FA7844F021EA8E100045533E /* The Silver Chair.epub in Resources */ = {isa = PBXBuildFile; fileRef = FA7844EE21EA8E100045533E /* The Silver Chair.epub */; };
 		FA7844F121EA8E100045533E /* The Adventures Of Sherlock Holmes - Adventure I.epub in Resources */ = {isa = PBXBuildFile; fileRef = FA7844EF21EA8E100045533E /* The Adventures Of Sherlock Holmes - Adventure I.epub */; };
@@ -20,13 +21,13 @@
 		FA8DCFF121E2940700E60E85 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA8DCFF021E2940700E60E85 /* Assets.xcassets */; };
 		FA8DCFF421E2940700E60E85 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA8DCFF221E2940700E60E85 /* LaunchScreen.storyboard */; };
 		FA8DCFFC21E2947200E60E85 /* PlacesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8DCFFB21E2947200E60E85 /* PlacesCollectionViewCell.swift */; };
-		FAF8A5D921E92E3600CE1997 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF8A5D821E92E3600CE1997 /* Book.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		00E1FF6841832311FCC09CF8 /* Pods-test.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-test.release.xcconfig"; path = "Pods/Target Support Files/Pods-test/Pods-test.release.xcconfig"; sourceTree = "<group>"; };
 		4D589FD67383EF56CE062B46 /* Pods-test.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-test.debug.xcconfig"; path = "Pods/Target Support Files/Pods-test/Pods-test.debug.xcconfig"; sourceTree = "<group>"; };
 		D00BC21E4CABEC376D542371 /* Pods_test.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_test.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA25303521EF8B9D004AAA65 /* Book.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		FA2A3D0D21E73ADA009D345F /* OptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionViewController.swift; sourceTree = "<group>"; };
 		FA7844EE21EA8E100045533E /* The Silver Chair.epub */ = {isa = PBXFileReference; lastKnownFileType = file; name = "The Silver Chair.epub"; path = "../../../../../Downloads/FolioReaderKit-master-3/Example/Shared/Sample eBooks/The Silver Chair.epub"; sourceTree = "<group>"; };
 		FA7844EF21EA8E100045533E /* The Adventures Of Sherlock Holmes - Adventure I.epub */ = {isa = PBXFileReference; lastKnownFileType = file; name = "The Adventures Of Sherlock Holmes - Adventure I.epub"; path = "../../../../../Downloads/FolioReaderKit-master-3/Example/Shared/Sample eBooks/The Adventures Of Sherlock Holmes - Adventure I.epub"; sourceTree = "<group>"; };
@@ -41,7 +42,6 @@
 		FA8DCFF321E2940700E60E85 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FA8DCFF521E2940700E60E85 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FA8DCFFB21E2947200E60E85 /* PlacesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesCollectionViewCell.swift; sourceTree = "<group>"; };
-		FAF8A5D821E92E3600CE1997 /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,9 +121,9 @@
 		FAF8A5D721E92E1400CE1997 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				FA25303521EF8B9D004AAA65 /* Book.swift */,
 				FA7844EF21EA8E100045533E /* The Adventures Of Sherlock Holmes - Adventure I.epub */,
 				FA7844EE21EA8E100045533E /* The Silver Chair.epub */,
-				FAF8A5D821E92E3600CE1997 /* Book.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -268,7 +268,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FAF8A5D921E92E3600CE1997 /* Book.swift in Sources */,
+				FA25303621EF8B9D004AAA65 /* Book.swift in Sources */,
 				FA8B5A5E21E2BCAA0025FF63 /* CollectionViewCell.swift in Sources */,
 				FA8B5A6121E2C0660025FF63 /* CellInCollectionViewCell.swift in Sources */,
 				FA8B5A5A21E2AAE50025FF63 /* SectionHeaderCollectionReusableView.swift in Sources */,

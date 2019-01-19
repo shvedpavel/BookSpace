@@ -23,6 +23,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         placesCollectionView.delegate = self
         
     }
+    
+    
+    
     //Import file
     @IBAction func importFile(_ sender: UIBarButtonItem) {
     
@@ -32,10 +35,15 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     present(documentPicker, animated: true, completion: nil)
     
     }
+    
+    
+    
+    
+    
     // Main collection
     @IBOutlet weak var placesCollectionView: UICollectionView!
     
-    var places = ["Pl1","Pl2","Pl3","Pl4","Pl5"]
+    var places = ["1"]
     var bookURL: URL!
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -43,26 +51,20 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
-
         return places.count+1
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         switch indexPath.row{
         case 0:
-            
-            
             let cell:CollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "placesCell", for: indexPath) as! CollectionViewCell
-            
             return cell
             
         default:
             let cell:PlacesCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "placesCell2", for: indexPath) as! PlacesCollectionViewCell
             
             cell.ImageCell.image = UIImage(named: places[indexPath.row-1])
-            cell.NameBook.text = "qw"
+            cell.NameBook.text = "try! FolioReader.getAuthorName()"
             cell.NameAuthor.text = "qwe"
             cell.LaterOnBook.text = "100 страниц"
             cell.BackgroundCell.layer.cornerRadius = 10
@@ -76,22 +78,17 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 
             return cell
         }
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
                 let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "SectionHeader", for: indexPath) as! SectionHeaderCollectionReusableView
-        
                 header.headerLabel.text = "My Book"
-        
                 return header
     }
-        
     
     @IBAction func BookOption(_ sender: UIButton) {
         
         let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        
         let action = UIAlertAction(title: "Редактировать", style: .default, handler: { (_) in
             let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "OptionBook")
             self.navigationController?.pushViewController(vc, animated: true)
@@ -104,10 +101,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         self.present(optionMenu, animated: true, completion: nil)
         
     }
-    
-    
-    
-    
     
     
     @IBOutlet weak var bookOne: UIButton?
@@ -169,39 +162,32 @@ extension ViewController {
         guard let epub = Epub(rawValue: sender.tag) else {
             return
         }
-        
+
         self.open(epub: epub)
     }
 }
 
 extension ViewController:UIDocumentPickerDelegate {
-    
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        guard let selectedFileURl = urls.first else { return }
+            let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+            let sandboxFileUrs = dir.appendingPathComponent(selectedFileURl.lastPathComponent)
         
-        guard let selectedFileURl = urls.first else {
-        return
-        }
-        let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let sandboxFileUrs = dir.appendingPathComponent(selectedFileURl.lastPathComponent)
-        
-        if FileManager.default.fileExists(atPath: sandboxFileUrs.path) {
-            let name = sandboxFileUrs.lastPathComponent
-            places.append(name)
-            print(places)
-           
-        }
+            if FileManager.default.fileExists(atPath: sandboxFileUrs.path) {
+                let nameBook = sandboxFileUrs.lastPathComponent
+                
+                placesCollectionView.performBatchUpdates({
+                    places.append(nameBook)
+                    placesCollectionView.insertItems(at: [IndexPath(item: 1, section: 0)])
+                }, completion: { _ in
+                    self.open(epub: Epub.bookOne)
+                })
+            }
             else {
-                do {
-                    try FileManager.default.copyItem(at: selectedFileURl, to: sandboxFileUrs)
-                    print("Copied file")
-                    
-                }
-                catch {
-                    print("Errors")
-                }
+                    print("errors")
+            }
         }
-        
-    }
 }
+
 
 
