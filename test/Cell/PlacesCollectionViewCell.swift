@@ -15,4 +15,10 @@ class PlacesCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var NameBook: UILabel!
     @IBOutlet weak var BackgroundCell: UIImageView!
     @IBOutlet weak var LaterOnBook: UILabel!
+    @IBOutlet weak var openBookButton: UIButton!
+    
+    @IBAction func bookOpenPressed(_ sender: UIButton) {
+        bookPressed?()
+    }
+    var bookPressed: (() -> Void)?
 }

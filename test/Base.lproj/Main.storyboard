@@ -189,6 +189,7 @@
                                                     <state key="normal" title="Button"/>
                                                     <connections>
                                                         <action selector="ActionBook:" destination="rf0-tx-fRs" eventType="touchUpInside" id="N1z-M5-QIX"/>
+                                                        <action selector="bookOpenPressed:" destination="C2B-kJ-dXf" eventType="touchUpInside" id="Ce1-FP-HSS"/>
                                                         <action selector="didOpen:" destination="BYZ-38-t0r" eventType="touchUpInside" id="RbG-XJ-dMb"/>
                                                     </connections>
                                                 </button>
@@ -220,6 +221,7 @@
                                             <outlet property="LaterOnBook" destination="cDc-0V-tal" id="VcF-dC-y96"/>
                                             <outlet property="NameAuthor" destination="bf2-Lc-Aqx" id="zVv-8Q-90w"/>
                                             <outlet property="NameBook" destination="oRz-rE-NJt" id="Fwh-hd-WbT"/>
+                                            <outlet property="openBookButton" destination="meg-kB-woc" id="lhb-Uh-Ost"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>

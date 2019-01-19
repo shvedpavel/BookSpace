@@ -16,6 +16,7 @@ class CellInCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var NameBook: UILabel!
     @IBOutlet weak var ImageInCell: UIImageView!
     @IBOutlet weak var CompleteBook: UILabel!
+
     
     
     

@@ -17,14 +17,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.bookOne?.tag = Epub.bookOne.rawValue
-        self.setCover(self.bookOne, index: 0)
         placesCollectionView.dataSource = self
         placesCollectionView.delegate = self
         
     }
-    
-    
     
     //Import file
     @IBAction func importFile(_ sender: UIBarButtonItem) {
@@ -44,6 +40,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     @IBOutlet weak var placesCollectionView: UICollectionView!
     
     var places = ["1"]
+    var books = [Book]()
     var bookURL: URL!
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -51,7 +48,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return places.count+1
+        return books.count + 1  //places.count+1
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -63,7 +60,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         default:
             let cell:PlacesCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "placesCell2", for: indexPath) as! PlacesCollectionViewCell
             
-            cell.ImageCell.image = UIImage(named: places[indexPath.row-1])
+            //cell.ImageCell.image = try! FolioReader.getCoverImage(s)
             cell.NameBook.text = "try! FolioReader.getAuthorName()"
             cell.NameAuthor.text = "qwe"
             cell.LaterOnBook.text = "100 страниц"
@@ -75,6 +72,11 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             cell.layer.shadowOffset = CGSize(width:3,height: 3)
             cell.layer.shadowRadius = 3.0
             cell.layer.shadowOpacity = 0.2
+            let book = books[indexPath.row - 1]
+            cell.bookPressed = { [weak self] in
+                self?.open(book: book)
+            }
+            //cell.openBookButton.tag = indexPath.row - 1
 
             return cell
         }
@@ -108,7 +110,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     // Reader
     let folioReader = FolioReader()
     // Reader config
-    private func readerConfiguration(forEpub epub: Epub) -> FolioReaderConfig {
+    private func readerConfiguration(forEpub epub: Book) -> FolioReaderConfig {
         let config = FolioReaderConfig(withIdentifier: epub.readerIdentifier)
         config.shouldHideNavigationOnTap = epub.shouldHideNavigationOnTap
         config.scrollDirection = epub.scrollDirection
@@ -129,29 +131,39 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         return config
     }
     
-    fileprivate func open(epub: Epub) {
-        guard let bookPath = epub.bookPath else {
+    fileprivate func open(book: Book) {
+        guard let bookPath = book.bookPath else {
             return
         }
         
-        let readerConfiguration = self.readerConfiguration(forEpub: epub)
+        let readerConfiguration = self.readerConfiguration(forEpub: book)
         folioReader.presentReader(parentViewController: self, withEpubPath: bookPath, andConfig: readerConfiguration, shouldRemoveEpub: false)
     }
     
-    private func setCover(_ button: UIButton?, index: Int) {
-        guard
-            let epub = Epub(rawValue: index),
-            let bookPath = epub.bookPath else {
-                return
-        }
-        
-        do {
-            let image = try FolioReader.getCoverImage(bookPath)
-            button?.setBackgroundImage(image, for: .normal)
-        } catch {
-            print(error.localizedDescription)
-        }
-    }
+//    fileprivate func open(epub: Epub) {
+//        guard let bookPath = epub.bookPath else {
+//            return
+//        }
+//
+//        let readerConfiguration = self.readerConfiguration(forEpub: epub)
+//        folioReader.presentReader(parentViewController: self, withEpubPath: bookPath, andConfig: readerConfiguration, shouldRemoveEpub: false)
+//    }
+    
+    
+//    private func setCover(_ button: UIButton?, index: Int) {
+//        guard
+//            let epub = Epub(rawValue: index),
+//            let bookPath = epub.bookPath else {
+//                return
+//        }
+//
+//        do {
+//            let image = try FolioReader.getCoverImage(bookPath)
+//            button?.setBackgroundImage(image, for: .normal)
+//        } catch {
+//            print(error.localizedDescription)
+//        }
+//    }
 }
 
 // IBAction
@@ -171,16 +183,20 @@ extension ViewController:UIDocumentPickerDelegate {
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
         guard let selectedFileURl = urls.first else { return }
             let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-            let sandboxFileUrs = dir.appendingPathComponent(selectedFileURl.lastPathComponent)
+            let sandboxFileUrl = dir.appendingPathComponent(selectedFileURl.lastPathComponent)
         
-            if FileManager.default.fileExists(atPath: sandboxFileUrs.path) {
-                let nameBook = sandboxFileUrs.lastPathComponent
+            if FileManager.default.fileExists(atPath: sandboxFileUrl.path) {
+                let nameBook = sandboxFileUrl.lastPathComponent
+                
+                let book = Book(name: nameBook, bookPath: sandboxFileUrl.path, readerIdentifier: "1", shouldHideNavigationOnTap: true, scrollDirection: .horizontal)
+                
                 
                 placesCollectionView.performBatchUpdates({
-                    places.append(nameBook)
+                    // places.append(nameBook)
+                    books.append(book)
                     placesCollectionView.insertItems(at: [IndexPath(item: 1, section: 0)])
                 }, completion: { _ in
-                    self.open(epub: Epub.bookOne)
+                    self.open()
                 })
             }
             else {
